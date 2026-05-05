@@ -1,0 +1,37 @@
+agent-profiles:
+  default:
+    description: Default profile with standard guardrails
+    model: mimo-v2.5-pro
+    temperature: 0.7
+    hooks:
+      pre-tool-call:
+        - type: guardrail
+        - type: logging
+      post-tool-call:
+        - type: logging
+    guardrails:
+      blocked-commands:
+        - "rm -rf /"
+        - "DROP TABLE"
+        - "git push --force"
+        - "format c:"
+        - "shutdown"
+
+  safe-mode:
+    description: Safe mode with strict guardrails and rate limiting
+    model: mimo-v2.5-pro
+    temperature: 0.3
+    hooks:
+      pre-tool-call:
+        - type: rate-limiting
+          config:
+            max-calls-per-minute: 10
+        - type: guardrail
+          config:
+            blocked-commands:
+              - "rm -rf"
+              - "git push --force"
+              - "DROP TABLE"
+              - "DELETE FROM"
+      post-tool-call:
+        - type: logging

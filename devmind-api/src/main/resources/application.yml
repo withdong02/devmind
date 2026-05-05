@@ -1,0 +1,60 @@
+spring:
+  application:
+    name: devmind
+
+  # Xiaomi MiMo API (OpenAI-compatible endpoint)
+  # Move api-key to env var in production: ${MIMO_API_KEY}
+  ai:
+    openai:
+      base-url: https://token-plan-cn.xiaomimimo.com
+      api-key: ${MIMO_API_KEY:your-api-key-here}
+      chat:
+        options:
+          model: mimo-v2.5-pro
+          temperature: 0.7
+          max-tokens: 4096
+
+  # PostgreSQL + pgvector
+  datasource:
+    url: jdbc:postgresql://localhost:5432/devmind
+    username: devmind
+    password: devmind
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: false
+    defer-datasource-initialization: true
+
+  # Redis
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+  # SQL init (for pgvector extension)
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
+
+server:
+  port: 8080
+
+# SpringDoc OpenAPI
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+
+logging:
+  level:
+    com.devmind: DEBUG
