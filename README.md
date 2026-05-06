@@ -1,53 +1,8 @@
 # DevMind
 
-> AI-Powered Developer Assistant | AI 开发者助手
+> AI 开发者助手 | AI-Powered Developer Assistant
 
-[English](#english) | [中文](#中文)
-
----
-
-## English
-
-### Overview
-
-Full-stack AI developer assistant. Backend: **Java 17 + Spring Boot 3 + Spring AI**. Frontend: **React + TypeScript + Vite**.
-
-**Core modules:**
-- **MCP** — Server exposes tools to Claude Desktop/Cursor; Client connects external MCP services
-- **Skills** — 6 built-in skills (Code Review, Bug Analysis, DocGen, Task Planner, Git, Code Search) with auto-routing
-- **RAG** — AST-aware code chunking (JavaParser), pgvector embeddings, hybrid retrieval (semantic + keyword, RRF)
-- **Memory** — 4 types (short-term/long-term/episodic/semantic), LLM auto-consolidation
-- **Context Engineering** — Token budget management, priority scoring, greedy knapsack assembly
-- **Multi-Agent** — Orchestrator + 4 specialists (Code, Research, Planning, Documentation)
-- **Harness** — Hook chains, YAML profiles, guardrails, rate limiting, audit logging
-
-**Tech stack:** Java 17, Spring Boot 3.x, Spring AI 1.x, PostgreSQL 16 + pgvector, Redis 7, React 19, Vite, Docker Compose
-
-### Quick Start
-
-**Prerequisites:** [Docker Desktop](https://www.docker.com/products/docker-desktop/) with WSL2 enabled
-
-```bash
-git clone https://github.com/withdong02/devmind.git && cd devmind
-cp .env.example .env   # edit: set MIMO_API_KEY
-docker-compose up -d
-```
-
-| Service | URL |
-|---------|-----|
-| Frontend | http://localhost:3000 |
-| Backend API | http://localhost:8080 |
-| Swagger UI | http://localhost:8080/swagger-ui.html |
-
-### Rebuild After Changes
-
-```bash
-docker-compose up -d --build           # rebuild all
-docker-compose up -d --build backend   # backend only
-docker-compose up -d --build frontend  # frontend only
-docker-compose logs -f backend         # view logs
-docker-compose down                    # stop all
-```
+[中文](#中文) | [English](#english)
 
 ---
 
@@ -96,22 +51,67 @@ docker-compose down                    # 停止所有服务
 
 ---
 
+## English
+
+### Overview
+
+Full-stack AI developer assistant. Backend: **Java 17 + Spring Boot 3 + Spring AI**. Frontend: **React + TypeScript + Vite**.
+
+**Core modules:**
+- **MCP** — Server exposes tools to Claude Desktop/Cursor; Client connects external MCP services
+- **Skills** — 6 built-in skills (Code Review, Bug Analysis, DocGen, Task Planner, Git, Code Search) with auto-routing
+- **RAG** — AST-aware code chunking (JavaParser), pgvector embeddings, hybrid retrieval (semantic + keyword, RRF)
+- **Memory** — 4 types (short-term/long-term/episodic/semantic), LLM auto-consolidation
+- **Context Engineering** — Token budget management, priority scoring, greedy knapsack assembly
+- **Multi-Agent** — Orchestrator + 4 specialists (Code, Research, Planning, Documentation)
+- **Harness** — Hook chains, YAML profiles, guardrails, rate limiting, audit logging
+
+**Tech stack:** Java 17, Spring Boot 3.x, Spring AI 1.x, PostgreSQL 16 + pgvector, Redis 7, React 19, Vite, Docker Compose
+
+### Quick Start
+
+**Prerequisites:** [Docker Desktop](https://www.docker.com/products/docker-desktop/) with WSL2 enabled
+
+```bash
+git clone https://github.com/withdong02/devmind.git && cd devmind
+cp .env.example .env   # edit: set MIMO_API_KEY
+docker-compose up -d
+```
+
+| Service | URL |
+|---------|-----|
+| Frontend | http://localhost:3000 |
+| Backend API | http://localhost:8080 |
+| Swagger UI | http://localhost:8080/swagger-ui.html |
+
+### Rebuild After Changes
+
+```bash
+docker-compose up -d --build           # rebuild all
+docker-compose up -d --build backend   # backend only
+docker-compose up -d --build frontend  # frontend only
+docker-compose logs -f backend         # view logs
+docker-compose down                    # stop all
+```
+
+---
+
 ## Project Structure
 
 ```
 devmind/
-├── devmind-core/          # Domain interfaces (zero dependencies)
-├── devmind-common/        # Shared DTOs, exceptions, utilities
-├── devmind-memory/        # Memory system (4 types)
-├── devmind-rag/           # RAG pipeline (load → chunk → embed → retrieve)
-├── devmind-mcp-server/    # MCP Server (expose tools)
-├── devmind-mcp-client/    # MCP Client (connect external servers)
-├── devmind-skills/        # Skill implementations
-├── devmind-context/       # Context engineering engine
-├── devmind-agents/        # Multi-agent orchestration
-├── devmind-harness/       # Hook system, profiles, audit
-├── devmind-api/           # Spring Boot application entry
-└── devmind-frontend/      # React frontend
+├── devmind-core/          # 领域接口（零依赖）
+├── devmind-common/        # 共享 DTO、异常、工具类
+├── devmind-memory/        # 记忆系统（4 种类型）
+├── devmind-rag/           # RAG 管道（加载→分块→嵌入→检索）
+├── devmind-mcp-server/    # MCP Server（暴露工具）
+├── devmind-mcp-client/    # MCP Client（连接外部服务）
+├── devmind-skills/        # 技能实现
+├── devmind-context/       # 上下文工程引擎
+├── devmind-agents/        # 多 Agent 编排
+├── devmind-harness/       # Hook 系统、Profile、审计
+├── devmind-api/           # Spring Boot 应用入口
+└── devmind-frontend/      # React 前端
 ```
 
 ## License

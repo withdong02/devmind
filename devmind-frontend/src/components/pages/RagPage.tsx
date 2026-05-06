@@ -30,7 +30,7 @@ export function RagPage() {
       const data = await chatService.ragSearch(searchQuery, 10)
       setResults(data)
     } catch {
-      setError('Search failed. Make sure the backend is running.')
+      setError('搜索失败，请确认后端服务已启动。')
     } finally {
       setSearching(false)
     }
@@ -45,7 +45,7 @@ export function RagPage() {
       const data = await chatService.ragIndex(indexPath)
       setIndexResult(data)
     } catch {
-      setError('Indexing failed. Check the path and try again.')
+      setError('索引失败，请检查路径后重试。')
     } finally {
       setIndexing(false)
     }
@@ -54,8 +54,8 @@ export function RagPage() {
   return (
     <div className="flex flex-col h-full">
       <header className="border-b border-gray-700 px-6 py-4">
-        <h1 className="text-xl font-semibold text-gray-100">RAG Search</h1>
-        <p className="text-sm text-gray-400">Index documents and search code semantically</p>
+        <h1 className="text-xl font-semibold text-gray-100">RAG 检索</h1>
+        <p className="text-sm text-gray-400">索引文档并进行语义代码搜索</p>
       </header>
 
       <div className="flex-1 overflow-y-auto px-6 py-4 space-y-6">
@@ -63,14 +63,14 @@ export function RagPage() {
         <div className="bg-gray-800 border border-gray-700 rounded-lg p-4">
           <h2 className="text-sm font-medium text-gray-300 mb-3 flex items-center gap-2">
             <FolderOpen className="w-4 h-4" />
-            Index Documents
+            索引文档
           </h2>
           <div className="flex gap-2">
             <input
               type="text"
               value={indexPath}
               onChange={e => setIndexPath(e.target.value)}
-              placeholder="Directory path (e.g., C:/Users/you/project/src)"
+              placeholder="目录路径（如 C:/Users/you/project/src）"
               className="flex-1 px-3 py-2 bg-gray-900 border border-gray-600 rounded-lg text-gray-100 text-sm placeholder-gray-500 focus:outline-none focus:border-brand-500"
             />
             <button
@@ -79,12 +79,12 @@ export function RagPage() {
               className="px-4 py-2 rounded-lg bg-brand-600 hover:bg-brand-700 disabled:bg-gray-700 text-white text-sm transition-colors flex items-center gap-2"
             >
               {indexing ? <Loader2 className="w-4 h-4 animate-spin" /> : <FolderOpen className="w-4 h-4" />}
-              {indexing ? 'Indexing...' : 'Index'}
+              {indexing ? '索引中...' : '索引'}
             </button>
           </div>
           {indexResult && (
             <div className="mt-3 text-sm text-green-400">
-              Indexed {indexResult.documentsIndexed} documents, created {indexResult.chunksCreated} chunks
+              已索引 {indexResult.documentsIndexed} 个文档，生成 {indexResult.chunksCreated} 个分块
             </div>
           )}
         </div>
@@ -93,7 +93,7 @@ export function RagPage() {
         <div className="bg-gray-800 border border-gray-700 rounded-lg p-4">
           <h2 className="text-sm font-medium text-gray-300 mb-3 flex items-center gap-2">
             <Search className="w-4 h-4" />
-            Semantic Search
+            语义搜索
           </h2>
           <div className="flex gap-2">
             <input
@@ -101,7 +101,7 @@ export function RagPage() {
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && handleSearch()}
-              placeholder="Search for code, functions, concepts..."
+              placeholder="搜索代码、函数、概念..."
               className="flex-1 px-3 py-2 bg-gray-900 border border-gray-600 rounded-lg text-gray-100 text-sm placeholder-gray-500 focus:outline-none focus:border-brand-500"
             />
             <button
@@ -110,7 +110,7 @@ export function RagPage() {
               className="px-4 py-2 rounded-lg bg-brand-600 hover:bg-brand-700 disabled:bg-gray-700 text-white text-sm transition-colors flex items-center gap-2"
             >
               {searching ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
-              Search
+              搜索
             </button>
           </div>
         </div>
@@ -125,7 +125,7 @@ export function RagPage() {
         {results.length > 0 && (
           <div className="space-y-3">
             <h2 className="text-sm font-medium text-gray-300">
-              Results ({results.length})
+              结果 ({results.length})
             </h2>
             {results.map(r => (
               <div key={r.chunkId} className="bg-gray-800 border border-gray-700 rounded-lg p-4">

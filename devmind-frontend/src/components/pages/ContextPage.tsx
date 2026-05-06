@@ -48,7 +48,7 @@ export function ContextPage() {
       const data = await chatService.buildContext(query)
       setResult(data)
     } catch {
-      setError('Failed to build context')
+      setError('构建上下文失败')
     } finally {
       setLoading(false)
     }
@@ -64,8 +64,8 @@ export function ContextPage() {
   return (
     <div className="flex flex-col h-full">
       <header className="border-b border-gray-700 px-6 py-4">
-        <h1 className="text-xl font-semibold text-gray-100">Context Engineering</h1>
-        <p className="text-sm text-gray-400">Debug context assembly, token budget, and priority scoring</p>
+        <h1 className="text-xl font-semibold text-gray-100">上下文工程</h1>
+        <p className="text-sm text-gray-400">调试上下文组装、Token 预算和优先级评分</p>
       </header>
 
       <div className="flex-1 overflow-y-auto px-6 py-4 space-y-6">
@@ -73,7 +73,7 @@ export function ContextPage() {
         <div className="bg-gray-800 border border-gray-700 rounded-lg p-4">
           <h2 className="text-sm font-medium text-gray-300 mb-3 flex items-center gap-2">
             <Settings className="w-4 h-4" />
-            Token Budget
+            Token 预算
           </h2>
           <div className="flex items-center gap-4">
             <input
@@ -93,7 +93,7 @@ export function ContextPage() {
         <div className="bg-gray-800 border border-gray-700 rounded-lg p-4">
           <h2 className="text-sm font-medium text-gray-300 mb-3 flex items-center gap-2">
             <Play className="w-4 h-4" />
-            Test Context Assembly
+            测试上下文组装
           </h2>
           <div className="flex gap-2">
             <input
@@ -101,7 +101,7 @@ export function ContextPage() {
               value={query}
               onChange={e => setQuery(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && handleBuild()}
-              placeholder="Enter a query to see how context is assembled..."
+              placeholder="输入查询，查看上下文如何组装..."
               className="flex-1 px-3 py-2 bg-gray-900 border border-gray-600 rounded-lg text-gray-100 text-sm placeholder-gray-500 focus:outline-none focus:border-brand-500"
             />
             <button
@@ -110,7 +110,7 @@ export function ContextPage() {
               className="px-4 py-2 rounded-lg bg-brand-600 hover:bg-brand-700 disabled:bg-gray-700 text-white text-sm transition-colors flex items-center gap-2"
             >
               {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Layers className="w-4 h-4" />}
-              Build
+              构建
             </button>
           </div>
         </div>
@@ -127,7 +127,7 @@ export function ContextPage() {
             {/* Summary Bar */}
             <div className="bg-gray-800 border border-gray-700 rounded-lg p-4">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium text-gray-300">Budget Usage</span>
+                <span className="text-sm font-medium text-gray-300">预算使用</span>
                 <span className={`text-sm ${result.withinBudget ? 'text-green-400' : 'text-red-400'}`}>
                   {result.totalTokens} / {result.tokenBudget} tokens
                 </span>
@@ -139,13 +139,13 @@ export function ContextPage() {
                 />
               </div>
               <div className="mt-2 text-xs text-gray-500">
-                {result.componentCount} components assembled
+                已组装 {result.componentCount} 个组件
               </div>
             </div>
 
             {/* Component Breakdown */}
             <div className="space-y-2">
-              <h2 className="text-sm font-medium text-gray-300">Components (by priority)</h2>
+              <h2 className="text-sm font-medium text-gray-300">组件（按优先级排序）</h2>
               {result.components.map((comp, i) => (
                 <div key={comp.id + i} className={`border rounded-lg p-3 ${TYPE_COLORS[comp.type] || 'bg-gray-800 border-gray-700'}`}>
                   <div className="flex items-center gap-2 mb-1">
@@ -162,7 +162,7 @@ export function ContextPage() {
 
             {/* Rendered Preview */}
             <div className="bg-gray-800 border border-gray-700 rounded-lg p-4">
-              <h2 className="text-sm font-medium text-gray-300 mb-3">Rendered Prompt Preview</h2>
+              <h2 className="text-sm font-medium text-gray-300 mb-3">渲染后的 Prompt 预览</h2>
               <pre className="text-xs text-gray-300 bg-gray-900 rounded p-3 overflow-x-auto max-h-96 whitespace-pre-wrap">
                 {result.renderedPreview}
               </pre>

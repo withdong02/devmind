@@ -15,7 +15,7 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
       {/* Logo */}
       <div className="px-4 py-4 border-b border-gray-700">
         <h1 className="text-lg font-bold text-brand-400">DevMind</h1>
-        <p className="text-xs text-gray-500">AI Developer Assistant</p>
+        <p className="text-xs text-gray-500">AI 开发者助手</p>
       </div>
 
       {/* Navigation */}
@@ -29,7 +29,7 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
           }`}
         >
           <MessageSquare className="w-5 h-5" />
-          <span>Chat</span>
+          <span>对话</span>
         </button>
         <button
           onClick={() => onNavigate('skills')}
@@ -40,7 +40,7 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
           }`}
         >
           <Cpu className="w-5 h-5" />
-          <span>Skills</span>
+          <span>技能</span>
         </button>
         <button
           onClick={() => onNavigate('rag')}
@@ -51,7 +51,7 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
           }`}
         >
           <Search className="w-5 h-5" />
-          <span>RAG Search</span>
+          <span>RAG 检索</span>
         </button>
         <button
           onClick={() => onNavigate('memory')}
@@ -62,7 +62,7 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
           }`}
         >
           <Brain className="w-5 h-5" />
-          <span>Memory</span>
+          <span>记忆</span>
         </button>
         <button
           onClick={() => onNavigate('context')}
@@ -73,7 +73,7 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
           }`}
         >
           <Layers className="w-5 h-5" />
-          <span>Context</span>
+          <span>上下文</span>
         </button>
         <button
           onClick={() => onNavigate('agents')}
@@ -84,7 +84,7 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
           }`}
         >
           <Bot className="w-5 h-5" />
-          <span>Agents</span>
+          <span>Agent</span>
         </button>
         <button
           onClick={() => onNavigate('settings')}
@@ -95,7 +95,7 @@ export function Sidebar({ currentPage, onNavigate }: SidebarProps) {
           }`}
         >
           <Settings className="w-5 h-5" />
-          <span>Settings</span>
+          <span>设置</span>
         </button>
       </nav>
 

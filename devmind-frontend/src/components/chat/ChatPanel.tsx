@@ -61,7 +61,7 @@ export function ChatPanel({ sessionId, onSessionCreated }: ChatPanelProps) {
       const errorMessage: Message = {
         id: crypto.randomUUID(),
         role: 'assistant',
-        content: 'Sorry, something went wrong. Please make sure the backend is running.',
+        content: '出错了，请确认后端服务已启动。',
       }
       setMessages(prev => [...prev, errorMessage])
       setStreamingContent('')
@@ -82,7 +82,7 @@ export function ChatPanel({ sessionId, onSessionCreated }: ChatPanelProps) {
       {/* Header */}
       <header className="border-b border-gray-700 px-6 py-4">
         <h1 className="text-xl font-semibold text-gray-100">DevMind</h1>
-        <p className="text-sm text-gray-400">AI-Powered Developer Assistant</p>
+        <p className="text-sm text-gray-400">AI 开发者助手</p>
       </header>
 
       {/* Messages */}
@@ -91,8 +91,8 @@ export function ChatPanel({ sessionId, onSessionCreated }: ChatPanelProps) {
           <div className="flex items-center justify-center h-full">
             <div className="text-center text-gray-500">
               <div className="text-6xl mb-4">&#129504;</div>
-              <h2 className="text-xl font-medium mb-2">Welcome to DevMind</h2>
-              <p className="text-sm">Ask me about code review, bug analysis, task planning, or any dev question.</p>
+              <h2 className="text-xl font-medium mb-2">欢迎使用 DevMind</h2>
+              <p className="text-sm">可以问我代码审查、Bug 分析、任务规划，或任何开发相关问题。</p>
             </div>
           </div>
         )}
@@ -108,7 +108,7 @@ export function ChatPanel({ sessionId, onSessionCreated }: ChatPanelProps) {
         {isLoading && !streamingContent && (
           <div className="flex items-center gap-2 text-gray-400">
             <Loader2 className="w-4 h-4 animate-spin" />
-            <span className="text-sm">Thinking...</span>
+            <span className="text-sm">思考中...</span>
           </div>
         )}
         <div ref={messagesEndRef} />
@@ -121,7 +121,7 @@ export function ChatPanel({ sessionId, onSessionCreated }: ChatPanelProps) {
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Ask DevMind anything..."
+            placeholder="向 DevMind 提问..."
             className="flex-1 bg-gray-800 border border-gray-600 rounded-lg px-4 py-3 text-gray-100 placeholder-gray-500 resize-none focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500"
             rows={1}
             disabled={isLoading}

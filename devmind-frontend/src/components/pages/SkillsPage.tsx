@@ -27,7 +27,7 @@ export function SkillsPage() {
       const output = await chatService.executeSkill(skill.id, input)
       setResult({ skillId: skill.id, content: output.content })
     } catch {
-      setResult({ skillId: skill.id, content: 'Execution failed. Make sure the backend is running.' })
+      setResult({ skillId: skill.id, content: '执行失败，请确认后端服务已启动。' })
     } finally {
       setExecuting(null)
     }
@@ -36,7 +36,7 @@ export function SkillsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-full">
-        <div className="text-gray-400">Loading skills...</div>
+        <div className="text-gray-400">加载技能中...</div>
       </div>
     )
   }
@@ -44,8 +44,8 @@ export function SkillsPage() {
   return (
     <div className="flex flex-col h-full">
       <header className="border-b border-gray-700 px-6 py-4">
-        <h1 className="text-xl font-semibold text-gray-100">Skills</h1>
-        <p className="text-sm text-gray-400">Modular capabilities that can be invoked by agents or directly</p>
+        <h1 className="text-xl font-semibold text-gray-100">技能</h1>
+        <p className="text-sm text-gray-400">可由 Agent 或直接调用的模块化能力</p>
       </header>
 
       <div className="flex-1 overflow-y-auto px-6 py-4">
@@ -82,7 +82,7 @@ export function SkillsPage() {
                 className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-brand-600 hover:bg-brand-700 disabled:bg-gray-700 text-white text-sm transition-colors"
               >
                 <Play className="w-4 h-4" />
-                {executing === skill.id ? 'Executing...' : 'Execute'}
+                {executing === skill.id ? '执行中...' : '执行'}
               </button>
             </div>
           ))}
@@ -92,7 +92,7 @@ export function SkillsPage() {
         {result && (
           <div className="mt-6 bg-gray-800 border border-gray-700 rounded-lg p-4">
             <h3 className="font-medium text-gray-100 mb-2">
-              Result: <code className="text-brand-400">{result.skillId}</code>
+              结果: <code className="text-brand-400">{result.skillId}</code>
             </h3>
             <div className="text-sm text-gray-300 whitespace-pre-wrap">{result.content}</div>
           </div>

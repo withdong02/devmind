@@ -42,7 +42,7 @@ export function MemoryPage() {
       setStats(statsData)
       setMemories(memoriesData)
     } catch {
-      setError('Failed to load memories')
+      setError('加载记忆失败')
     } finally {
       setLoading(false)
     }
@@ -60,7 +60,7 @@ export function MemoryPage() {
       const results = await chatService.searchMemories(searchQuery, activeFilter, 20)
       setMemories(results)
     } catch {
-      setError('Search failed')
+      setError('搜索失败')
     } finally {
       setLoading(false)
     }
@@ -71,7 +71,7 @@ export function MemoryPage() {
       await chatService.deleteMemory(type, id)
       setMemories(prev => prev.filter(m => m.id !== id))
     } catch {
-      setError('Delete failed')
+      setError('删除失败')
     }
   }
 
@@ -83,7 +83,7 @@ export function MemoryPage() {
       setShowAdd(false)
       loadData()
     } catch {
-      setError('Store failed')
+      setError('存储失败')
     }
   }
 
@@ -100,8 +100,8 @@ export function MemoryPage() {
   return (
     <div className="flex flex-col h-full">
       <header className="border-b border-gray-700 px-6 py-4">
-        <h1 className="text-xl font-semibold text-gray-100">Memory</h1>
-        <p className="text-sm text-gray-400">View and manage AI memories across sessions</p>
+        <h1 className="text-xl font-semibold text-gray-100">记忆</h1>
+        <p className="text-sm text-gray-400">查看和管理跨会话的 AI 记忆</p>
       </header>
 
       <div className="flex-1 overflow-y-auto px-6 py-4 space-y-6">
@@ -109,10 +109,10 @@ export function MemoryPage() {
         {stats && (
           <div className="grid grid-cols-4 gap-3">
             {[
-              { label: 'Short-term', count: stats.shortTermCount, color: 'text-purple-400', icon: Clock },
-              { label: 'Long-term', count: stats.longTermCount, color: 'text-blue-400', icon: Database },
-              { label: 'Episodic', count: stats.episodicCount, color: 'text-green-400', icon: BookOpen },
-              { label: 'Semantic', count: stats.semanticCount, color: 'text-yellow-400', icon: Lightbulb },
+              { label: '短期', count: stats.shortTermCount, color: 'text-purple-400', icon: Clock },
+              { label: '长期', count: stats.longTermCount, color: 'text-blue-400', icon: Database },
+              { label: '情景', count: stats.episodicCount, color: 'text-green-400', icon: BookOpen },
+              { label: '语义', count: stats.semanticCount, color: 'text-yellow-400', icon: Lightbulb },
             ].map(s => (
               <button
                 key={s.label}
@@ -141,7 +141,7 @@ export function MemoryPage() {
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && handleSearch()}
-              placeholder="Search memories..."
+              placeholder="搜索记忆..."
               className="flex-1 px-3 py-2 bg-gray-900 border border-gray-600 rounded-lg text-gray-100 text-sm placeholder-gray-500 focus:outline-none focus:border-brand-500"
             />
             <button
@@ -150,7 +150,7 @@ export function MemoryPage() {
               className="px-4 py-2 rounded-lg bg-brand-600 hover:bg-brand-700 disabled:bg-gray-700 text-white text-sm transition-colors flex items-center gap-2"
             >
               {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
-              Search
+              搜索
             </button>
           </div>
           <button
@@ -158,7 +158,7 @@ export function MemoryPage() {
             className="px-4 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 text-gray-200 text-sm transition-colors flex items-center gap-2"
           >
             <Plus className="w-4 h-4" />
-            Add
+            添加
           </button>
         </div>
 
@@ -170,20 +170,20 @@ export function MemoryPage() {
               onChange={e => setNewType(e.target.value)}
               className="px-3 py-2 bg-gray-900 border border-gray-600 rounded-lg text-gray-100 text-sm"
             >
-              <option value="LONG_TERM">Long-term (Preferences)</option>
-              <option value="EPISODIC">Episodic (Tasks)</option>
-              <option value="SEMANTIC">Semantic (Facts)</option>
+              <option value="LONG_TERM">长期记忆（偏好）</option>
+              <option value="EPISODIC">情景记忆（任务）</option>
+              <option value="SEMANTIC">语义记忆（事实）</option>
             </select>
             <textarea
               value={newContent}
               onChange={e => setNewContent(e.target.value)}
-              placeholder="Enter memory content..."
+              placeholder="输入记忆内容..."
               rows={3}
               className="w-full px-3 py-2 bg-gray-900 border border-gray-600 rounded-lg text-gray-100 text-sm placeholder-gray-500 focus:outline-none focus:border-brand-500"
             />
             <div className="flex gap-2 justify-end">
-              <button onClick={() => setShowAdd(false)} className="px-3 py-1.5 text-sm text-gray-400 hover:text-gray-200">Cancel</button>
-              <button onClick={handleAdd} className="px-4 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-sm">Save</button>
+              <button onClick={() => setShowAdd(false)} className="px-3 py-1.5 text-sm text-gray-400 hover:text-gray-200">取消</button>
+              <button onClick={handleAdd} className="px-4 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-sm">保存</button>
             </div>
           </div>
         )}
@@ -232,8 +232,8 @@ export function MemoryPage() {
           {memories.length === 0 && !loading && (
             <div className="text-center text-gray-500 py-12">
               <Brain className="w-12 h-12 mx-auto mb-3 opacity-30" />
-              <p>No memories yet</p>
-              <p className="text-xs mt-1">Memories are created automatically from conversations</p>
+              <p>暂无记忆</p>
+              <p className="text-xs mt-1">记忆会在对话过程中自动创建</p>
             </div>
           )}
         </div>

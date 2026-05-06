@@ -24,14 +24,14 @@ export function SettingsPage() {
       setProfiles(p)
       setAuditLogs(a.logs || [])
       setAuditTotal(a.total || 0)
-    }).catch(() => setError('Failed to load settings')).finally(() => setLoading(false))
+    }).catch(() => setError('加载设置失败')).finally(() => setLoading(false))
   }, [])
 
   const handleActivateProfile = async (name: string) => {
     try {
       await chatService.activateProfile(name)
       setProfiles(prev => ({ ...prev, active: name }))
-    } catch { setError('Failed to activate profile') }
+    } catch { setError('激活 Profile 失败') }
   }
 
   if (loading) return <div className="flex items-center justify-center h-full"><Loader2 className="w-8 h-8 animate-spin text-gray-500" /></div>
@@ -39,15 +39,15 @@ export function SettingsPage() {
   return (
     <div className="flex flex-col h-full">
       <header className="border-b border-gray-700 px-6 py-4">
-        <h1 className="text-xl font-semibold text-gray-100">Settings & Harness</h1>
-        <p className="text-sm text-gray-400">Hook chains, profiles, guardrails, and audit logs</p>
+        <h1 className="text-xl font-semibold text-gray-100">设置 & Harness</h1>
+        <p className="text-sm text-gray-400">Hook 链、Profile、守卫规则和审计日志</p>
       </header>
       <div className="flex-1 overflow-y-auto px-6 py-4 space-y-6">
         {error && <div className="text-sm text-red-400 bg-red-900/20 border border-red-800 rounded-lg px-4 py-2">{error}</div>}
 
         {/* Profiles */}
         <div className="bg-gray-800 border border-gray-700 rounded-lg p-4">
-          <h2 className="text-sm font-medium text-gray-300 mb-3 flex items-center gap-2"><Settings className="w-4 h-4" /> Agent Profiles</h2>
+          <h2 className="text-sm font-medium text-gray-300 mb-3 flex items-center gap-2"><Settings className="w-4 h-4" /> Agent Profile</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {Object.entries(profiles.profiles).map(([name, profile]) => (
               <div key={name} className={`border rounded-lg p-3 cursor-pointer transition-colors ${
@@ -55,9 +55,9 @@ export function SettingsPage() {
               }`} onClick={() => handleActivateProfile(name)}>
                 <div className="flex items-center gap-2 mb-1">
                   <span className="text-sm font-medium text-gray-200">{name}</span>
-                  {profiles.active === name && <span className="text-xs px-1.5 py-0.5 rounded bg-brand-600 text-white">Active</span>}
+                  {profiles.active === name && <span className="text-xs px-1.5 py-0.5 rounded bg-brand-600 text-white">当前</span>}
                 </div>
-                <p className="text-xs text-gray-400">{profile.description || 'No description'}</p>
+                <p className="text-xs text-gray-400">{profile.description || '暂无描述'}</p>
                 <div className="mt-2 flex gap-2 text-xs text-gray-500">
                   {profile.model && <span>model: {profile.model}</span>}
                   {profile.temperature !== undefined && <span>temp: {profile.temperature}</span>}
@@ -69,7 +69,7 @@ export function SettingsPage() {
 
         {/* Hooks */}
         <div className="bg-gray-800 border border-gray-700 rounded-lg p-4">
-          <h2 className="text-sm font-medium text-gray-300 mb-3 flex items-center gap-2"><Shield className="w-4 h-4" /> Hook Chains</h2>
+          <h2 className="text-sm font-medium text-gray-300 mb-3 flex items-center gap-2"><Shield className="w-4 h-4" /> Hook 链</h2>
           <div className="space-y-3">
             {Object.entries(hooks).map(([type, hookList]) => (
               <div key={type}>
@@ -80,7 +80,7 @@ export function SettingsPage() {
                       {h.name} <span className="text-gray-500">({h.order})</span>
                     </span>
                   ))}
-                  {hookList.length === 0 && <span className="text-xs text-gray-600">No hooks</span>}
+                  {hookList.length === 0 && <span className="text-xs text-gray-600">无 Hook</span>}
                 </div>
               </div>
             ))}
@@ -90,7 +90,7 @@ export function SettingsPage() {
         {/* Guardrails */}
         {profiles.profiles[profiles.active]?.guardrails && (
           <div className="bg-gray-800 border border-gray-700 rounded-lg p-4">
-            <h2 className="text-sm font-medium text-gray-300 mb-3">Active Guardrails</h2>
+            <h2 className="text-sm font-medium text-gray-300 mb-3">当前守卫规则</h2>
             <pre className="text-xs text-gray-300 bg-gray-900 rounded p-3 overflow-x-auto">
               {JSON.stringify(profiles.profiles[profiles.active].guardrails, null, 2)}
             </pre>
@@ -100,7 +100,7 @@ export function SettingsPage() {
         {/* Audit Log */}
         <div className="bg-gray-800 border border-gray-700 rounded-lg p-4">
           <h2 className="text-sm font-medium text-gray-300 mb-3 flex items-center gap-2">
-            <Activity className="w-4 h-4" /> Audit Log <span className="text-gray-500">({auditTotal})</span>
+            <Activity className="w-4 h-4" /> 审计日志 <span className="text-gray-500">({auditTotal})</span>
           </h2>
           {auditLogs.length > 0 ? (
             <div className="space-y-1">
@@ -114,7 +114,7 @@ export function SettingsPage() {
               ))}
             </div>
           ) : (
-            <p className="text-xs text-gray-600">No audit entries yet</p>
+            <p className="text-xs text-gray-600">暂无审计记录</p>
           )}
         </div>
       </div>
