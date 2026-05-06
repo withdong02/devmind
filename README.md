@@ -75,36 +75,125 @@ devmind/
 
 ### Quick Start
 
-**Prerequisites:** Docker Desktop, Java 17+, Maven 3.9+
+#### Prerequisites
+
+| Requirement | Setup |
+|-------------|-------|
+| WSL2 | `wsl --install -d Ubuntu` in PowerShell, then restart |
+| Docker Desktop | Install from https://www.docker.com/products/docker-desktop/, enable WSL2 integration in Settings → Resources → WSL Integration |
+| Java 17+ | Only needed for local dev mode |
+| Maven 3.9+ | Only needed for local dev mode |
+| Node.js 18+ | Only needed for local dev mode |
+
+#### Option A: Docker Full Stack (Recommended)
 
 ```bash
 # 1. Clone
 git clone https://github.com/withdong02/devmind.git
 cd devmind
 
-# 2. Set API key
+# 2. Configure API key
 cp .env.example .env
-# Edit .env and set MIMO_API_KEY
+# Edit .env, set MIMO_API_KEY=your-key-here
 
-# 3. Start infrastructure
-docker-compose up -d postgres redis
-
-# 4. Run backend
-mvn clean install -DskipTests
-cd devmind-api && mvn spring-boot:run
-
-# 5. Run frontend (separate terminal)
-cd devmind-frontend && npm install && npm run dev
+# 3. Start everything
+docker-compose up -d
 ```
 
-- Frontend: http://localhost:5173 (dev) or http://localhost:3000 (Docker)
+Access:
+- Frontend: http://localhost:3000
 - Backend API: http://localhost:8080
 - Swagger UI: http://localhost:8080/swagger-ui.html
 
-**Full Docker deployment:**
+#### Option B: Local Development
 
 ```bash
-docker-compose up -d
+# 1. Start infrastructure only
+docker-compose up -d postgres redis
+
+# 2. Set environment variable
+export MIMO_API_KEY=your-key-here
+
+# 3. Build and run backend
+mvn clean install -DskipTests
+cd devmind-api && mvn spring-boot:run
+
+# 4. Run frontend (another terminal)
+cd devmind-frontend && npm install && npm run dev
+```
+
+Access:
+- Frontend: http://localhost:5173 (hot reload)
+- Backend API: http://localhost:8080
+
+#### Modifying the Project
+
+**Backend (Java):**
+
+Code changes take effect after rebuild. No hot reload by default.
+
+```bash
+# Quick recompile (skip tests)
+mvn compile -DskipTests
+
+# Full rebuild
+mvn clean install -DskipTests
+
+# Restart backend
+cd devmind-api && mvn spring-boot:run
+```
+
+**Frontend (React/TypeScript):**
+
+Vite dev server supports hot reload — save a file and the browser updates automatically.
+
+```bash
+cd devmind-frontend
+npm run dev
+```
+
+#### Rebuilding After Changes
+
+**Docker mode — rebuild and restart:**
+
+```bash
+# Rebuild backend image and restart
+docker-compose up -d --build backend
+
+# Rebuild frontend image and restart
+docker-compose up -d --build frontend
+
+# Rebuild everything
+docker-compose up -d --build
+```
+
+**Local mode — just recompile and restart:**
+
+```bash
+# Backend: recompile module that changed, then restart
+mvn compile -pl devmind-api -am -DskipTests
+cd devmind-api && mvn spring-boot:run
+
+# Frontend: just save the file, Vite hot-reloads
+```
+
+#### Useful Commands
+
+```bash
+# View running containers
+docker-compose ps
+
+# View backend logs (debug startup errors)
+docker-compose logs -f backend
+
+# View frontend logs
+docker-compose logs -f frontend
+
+# Stop all services
+docker-compose down
+
+# Stop and remove volumes (reset database)
+docker-compose down -v
 ```
 
 ### API Endpoints
@@ -198,36 +287,125 @@ devmind/
 
 ### 快速开始
 
-**前置条件：** Docker Desktop、Java 17+、Maven 3.9+
+#### 前置条件
+
+| 依赖 | 安装方式 |
+|------|---------|
+| WSL2 | PowerShell 中执行 `wsl --install -d Ubuntu`，重启电脑 |
+| Docker Desktop | 下载安装 https://www.docker.com/products/docker-desktop/，在 Settings → Resources → WSL Integration 中启用你的 Ubuntu 发行版 |
+| Java 17+ | 仅本地开发模式需要 |
+| Maven 3.9+ | 仅本地开发模式需要 |
+| Node.js 18+ | 仅本地开发模式需要 |
+
+#### 方式一：Docker 全栈（推荐）
 
 ```bash
-# 1. 克隆
+# 1. 克隆项目
 git clone https://github.com/withdong02/devmind.git
 cd devmind
 
 # 2. 配置 API Key
 cp .env.example .env
-# 编辑 .env 设置 MIMO_API_KEY
+# 编辑 .env，写入 MIMO_API_KEY=你的key
 
-# 3. 启动基础设施
-docker-compose up -d postgres redis
-
-# 4. 运行后端
-mvn clean install -DskipTests
-cd devmind-api && mvn spring-boot:run
-
-# 5. 运行前端（另开终端）
-cd devmind-frontend && npm install && npm run dev
+# 3. 一键启动
+docker-compose up -d
 ```
 
-- 前端：http://localhost:5173（开发模式）或 http://localhost:3000（Docker）
+访问地址：
+- 前端：http://localhost:3000
 - 后端 API：http://localhost:8080
 - Swagger 文档：http://localhost:8080/swagger-ui.html
 
-**Docker 全栈部署：**
+#### 方式二：本地开发
 
 ```bash
-docker-compose up -d
+# 1. 只启动基础设施
+docker-compose up -d postgres redis
+
+# 2. 设置环境变量
+export MIMO_API_KEY=你的key
+
+# 3. 编译并启动后端
+mvn clean install -DskipTests
+cd devmind-api && mvn spring-boot:run
+
+# 4. 启动前端（另开终端）
+cd devmind-frontend && npm install && npm run dev
+```
+
+访问地址：
+- 前端：http://localhost:5173（支持热更新）
+- 后端 API：http://localhost:8080
+
+#### 修改项目
+
+**后端（Java）：**
+
+修改代码后需要重新编译，不支持热更新。
+
+```bash
+# 快速重编译（跳过测试）
+mvn compile -DskipTests
+
+# 完整重建
+mvn clean install -DskipTests
+
+# 重启后端
+cd devmind-api && mvn spring-boot:run
+```
+
+**前端（React/TypeScript）：**
+
+Vite 开发服务器支持热更新 — 保存文件后浏览器自动刷新。
+
+```bash
+cd devmind-frontend
+npm run dev
+```
+
+#### 修改后重新构建
+
+**Docker 模式 — 重新构建镜像并重启：**
+
+```bash
+# 只重建后端
+docker-compose up -d --build backend
+
+# 只重建前端
+docker-compose up -d --build frontend
+
+# 全部重建
+docker-compose up -d --build
+```
+
+**本地模式 — 重编译后重启：**
+
+```bash
+# 后端：重编译变更的模块，然后重启
+mvn compile -pl devmind-api -am -DskipTests
+cd devmind-api && mvn spring-boot:run
+
+# 前端：直接保存文件，Vite 自动热更新
+```
+
+#### 常用命令
+
+```bash
+# 查看运行中的容器
+docker-compose ps
+
+# 查看后端日志（排查启动报错）
+docker-compose logs -f backend
+
+# 查看前端日志
+docker-compose logs -f frontend
+
+# 停止所有服务
+docker-compose down
+
+# 停止并删除数据卷（重置数据库）
+docker-compose down -v
 ```
 
 ### API 端点
